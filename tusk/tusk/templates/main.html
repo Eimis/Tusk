@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+	<!--<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>-->
+	<script src="{{ STATIC_URL }}js/jquery-2.1.0.min.js"></script>
+
+
+	<!-- Fonts -->
+	<link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic,700bold' rel='stylesheet' content-type='text/css'>
+	<!-- / Fonts-->
+
+	<!-- Bootstrap -->
+	<link href="{{ STATIC_URL }}css/bootstrap.min.css" rel="stylesheet">
+	<script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+	<!-- / Bootstrap-->
+
+
+	<link href="{{ STATIC_URL }}main.css" rel="stylesheet" content-type='text/css'>
+
+{% block extra_scripts %}
+{% endblock %}
+
+</head>
+<body>
+	<div class="container">
+		<div class="header">
+			<p><a href = "/dashboard"><span style = "color:red;">Tusk</span></a> is a time management app for Agile methodology driven projects.</p><br><br>
+		</div>
+
+		{% block content %}
+
+		<div class = "auth">
+
+			<a href="/register">Register</a><br><br>
+
+			<div class = "errors">
+				{% for key, value in form.errors.items %}
+				Error: {{ value }}
+				{% endfor %}
+			</div>
+
+			<form action = "#" method = 'POST'>
+
+				{% csrf_token %}
+
+				<p>Username: </p>{{ form.username }}<br><br>
+				<p>Pasword: </p>{{ form.password }}<br><br>
+
+				<input type="submit" value="Login"></input>
+
+			</form>
+
+
+		</div>
+
+		{% endblock %}
+
+{% block footer %}
+<div class="footer"></div>
+{% endblock %}
+
+
+
+
+
+
+
+	</div> <!-- /container -->
+</body>
+</html>

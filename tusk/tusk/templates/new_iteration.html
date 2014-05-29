@@ -1,0 +1,38 @@
+{% extends "main.html" %}
+
+{% block content %}
+
+
+<div class="dashboard">
+
+
+---
+
+
+<form action = "#" method = 'POST'>
+	{% csrf_token %}
+	<p>Duration:</p> {{ form }}<br><br>
+	<input type="submit" value="Add new Iteration"></input>
+</form>
+
+
+
+
+</div>
+
+proj: {{ project.id }}, {{ user.id }}
+
+
+
+
+{% endblock %}
+
+
+
+<!--
+
+	user:2
+duration:2-4 weeks
+project:6
+
+-->

@@ -1,0 +1,75 @@
+{% extends "main.html" %}
+
+{% block content %}
+
+<div class="dashboard">
+
+	<div class = "taskInfo">
+	<p span style="font-size: 2.5em;"><b>Task info: </b></p>
+	<p>Description: <span class="glyphicon glyphicon-pencil"></span>&nbsp;<i> {{ task.description }} </i></p>
+	<p> Active developers: <span class="glyphicon glyphicon-user"></span>&nbsp;<i>
+
+		{% for developer in developers %}
+		{{ developer }}, 
+		{% endfor %}
+
+	</i></p>
+	<p>Total time spent on this task: <span class="glyphicon glyphicon-time"></span> &nbsp;<i span style = "color: #64991e;"> {{ task.time_spent }} 00:00 </i></p>
+	<p>Status: &nbsp;<i>
+
+		{% if task.status == "Not started" %}
+
+		<span class="glyphicon glyphicon-remove" style="color:#bd0000"></span> {{ task.status }}
+
+		{% elif task.status == "In progress" %}
+
+		<span class="glyphicon glyphicon-chevron-right" style="color:#CBA40A"></span> {{ task.status }}
+
+		{% elif task.status == "Done" %}
+
+		<span class="glyphicon glyphicon-ok" style="color:#64991e"></span> {{ task.status }}
+
+		{% endif %}
+
+	</i></p>
+
+	<hr>
+
+	<p span style="font-size: 1.5em; font-weight: 300;">Time entries: </p>
+
+
+	<div class="entries">
+
+		<p>Entry 1</p>
+		<p>Had lunch at KFC</p>
+
+	</div>
+
+	<div class="input-group entryInput input-append">
+  <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+  <input type="text" class="form-control" placeholder="f. ex. fixed object hierarchy">
+</div>
+
+<button type="button" class="btn btn-default btn-sm entrySubmit">
+   Submit
+</button>
+
+
+
+
+
+</div>
+
+</div>
+
+{% endblock %}
+
+{% block footer %}
+
+
+
+<br><div class="footer"><a href="{{ domain }}logout/">Logout ({{ user }})</a></div>
+
+{% endblock %}
+
+

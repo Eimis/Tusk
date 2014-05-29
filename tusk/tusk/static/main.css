@@ -1,0 +1,193 @@
+body{
+/*background-image: url("/static/images/diamond_upholstery.png");*/
+background: url("/static/images/bg.png") no-repeat center center fixed; 
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+}
+
+
+body{
+	font-family: "Ubuntu";
+}
+
+.domain, .csrf{
+	display: none;
+}
+
+.container{
+	margin: 0 auto -4em;
+}
+
+a:visited{text-decoration: none;}
+a:active{text-decoration: none;}
+a:hover{text-decoration: none;}
+
+.header{
+	margin-top: 3em;
+	text-align: center;
+	width: 100%;
+}
+
+.header p{
+	color: white;
+}
+
+.auth{
+	text-align: center;
+	margin-top: 5em;
+}
+
+.dashboard{
+	text-align: center;
+	margin: 0 auto;
+	width: 100%;
+
+}
+
+.projects{
+	height: 200px;
+	text-align: left;
+	float: none;
+	margin: 0 auto;
+	width: 33.3333333%;
+	float: none;
+	padding: 10px;
+}
+
+
+.projects p{
+	padding-left: 20px;
+	padding-top: 20px;
+}
+
+.stories{
+	height: auto;
+	text-align: left;
+	float: left;
+	margin: 0 auto;
+	width: 50%;
+	padding: 10px;
+	
+}
+
+
+
+.stories p{
+	padding-left: 20px;
+	padding-top: 20px;
+}
+
+.button {
+	text-align: center;
+	text-decoration: none;
+	padding: .5em 1em .55em;
+	-webkit-border-radius: .5em; 
+	-moz-border-radius: .5em;
+	border-radius: .5em;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	width: 100%;
+}
+
+.white {
+	color: #606060;
+	border: solid 1px #b7b7b7;
+	background: #fff;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));
+	background: -moz-linear-gradient(top,  #fff,  #ededed);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed');
+}
+
+.wrapProject{
+	width: 70%;
+	margin: 0 auto;
+}
+
+.footer{
+	margin: 0 auto;
+	display: inline-block;
+	width: 100%;
+	height: 4em;
+	margin-top: 3em;
+	text-align: center;
+}
+
+.addNew{
+	color: #64991e;
+}
+
+.iterationsWrap{
+	width: 25em;
+	margin: 0 auto;
+	text-align: center;
+	display: inline-block;
+}
+
+.iterations .developers{
+
+}
+
+.iterations{
+	padding: .1em;
+}
+
+.developers p{
+}
+
+.iterationDropdown{
+	width: 60%;
+	margin-top: 1em;
+	margin-left: 3em;
+	display: inline-table;
+}
+
+.newIteration{
+	color: #64991e;
+	float: left;
+	margin-top: -3.2em;
+}
+
+.tasks{
+	margin-top: -1.5em;
+}
+
+.tasks p{
+	padding-left: 1em;
+	padding-top: 0;
+}
+
+.task{
+	padding: 0;
+}
+
+.taskInfo{
+
+}
+
+hr{
+	width: 30%;
+}
+
+.entryInput{
+	width: 25%;
+	margin: 0 auto;
+}
+
+.entrySubmit{
+	margin-top: .5em;
+}
+
+.entries{
+	background: rgba(255, 255, 255, 0.2);
+	width: 30%;
+	margin: 0 auto;
+}
+
+.entries p{
+	padding: .5em;
+	padding-top: .2em;
+	padding-bottom: .1em;
+}

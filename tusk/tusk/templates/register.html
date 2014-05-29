@@ -1,0 +1,24 @@
+{% extends "main.html" %}
+
+{% block content %}
+
+<div class="auth">
+
+	<div class = "errors">
+		{% for key, value in form.errors.items %}
+		Error: {{ value }}
+		{% endfor %}
+	</div>
+
+
+	<form action = "#" method = 'POST'>
+		{% csrf_token %}
+		<p>Username:</p> {{ form.username }}<br><br>
+		<p>Password:</p> {{ form.password1 }}<br><br>
+		<p>Repeat password:</p> {{ form.password2 }}<br><br>
+		<input type="submit" value="Register"></input>
+	</form>
+
+</div>
+
+{% endblock %}

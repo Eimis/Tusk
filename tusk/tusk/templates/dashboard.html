@@ -1,0 +1,89 @@
+{% extends "main.html" %}
+
+{% block extra_scripts %}
+
+
+<script src="{{ STATIC_URL }}/js/dashboard.js"></script>
+
+
+
+{% endblock %}
+
+{% block content %}
+
+<div class = "dashboard">Hello, {{ user }}.<br><br>
+
+
+	<div class = "projects">
+		<div class = "button white">
+			Projects | <button type="button" class="btn btn-default btn-xs">
+			<span class="glyphicon glyphicon-plus addNew"></span>
+			<a data-toggle="modal" href="#newProject">
+				Add new
+			</a>
+		</button>
+	</div>
+
+
+	{% for project in projects %}
+	<p><a href = {{ domain }}{{ project.slug }}>{{ project }}</a></p>
+	{% endfor %}
+</div>
+
+
+
+<!-- newProject Modal start-->
+
+<div class="modal fade" id="newProject" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">New Project</h4>
+			</div>
+			<div class="modal-body">
+				Please enter a name for a new <b>Project</b> and describe it.<br><br>
+
+				<form action = "/new_project/" method="POST" class="new_subject_form">
+					{% csrf_token %}
+					<div class="input-group">
+						<span class="input-group-addon"><i class="glyphicon glyphicon-file"></i></span>
+						<input type="text" class="form-control" placeholder="f. ex. 'School Tool' " name="project_title">
+					</div>
+
+					<br><br>
+
+					
+					<div class="input-group">
+						<span class="input-group-addon"></span>
+						<textarea class="form-control" rows="3" placeholder="Project description" name="project_description"></textarea>
+					</div>
+				
+
+
+
+
+
+
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary new_subject_button">Create new Project</button>
+				</form>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- newProject Modal end -->
+
+{% endblock %}
+
+{% block footer %}
+<br><br><a href="{{ domain }}logout">Logout ({{ user }})</a>
+{% endblock %}
+
+
+
+
