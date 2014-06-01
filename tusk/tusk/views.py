@@ -14,7 +14,9 @@ from django.core import serializers
 from django.shortcuts import render
 
 def Main(request):
-    ''' landing page '''
+    '''
+    Landing page
+    '''
     if request.method == 'POST':
     	form = AuthenticationForm(data = request.POST)
     	errors = form.errors
@@ -31,7 +33,9 @@ def Main(request):
 
 
 def Register(request):
-    ''' Adds a new user to the system '''
+    '''
+    Adds a new user (Project manager) to the system. This is not a Developer.
+    '''
     if request.method == 'POST':
     	form = UserCreationForm(request.POST)
     	errors = form.errors
@@ -58,6 +62,10 @@ def Logout(request):
 
 @login_required(redirect_field_name=None)
 def Dashboard(request):
+    """
+    Dashboard displays a list of user Projects or a list of Projects that
+    Dev is assigned to.
+    """
     user = request.user
     projects = user.project_set.all().order_by('-date')
     domain = Site.objects.get_current().domain
@@ -80,7 +88,7 @@ def New_project(request):
 @login_required(redirect_field_name=None)
 def Project_view(request, slug):
     """
-    A Project view with User stories, tasks, iterations
+    A Project view with User stories, tasks, iterations, their time, etc.
     """
     domain = Site.objects.get_current().domain
     user = request.user
@@ -115,6 +123,7 @@ def New_iteration(request, slug):
     form = IterationForm()
     user = request.user
     project = Project.objects.get(user=user, slug=slug)
+    domain = Site.objects.get_current().domain
     if request.method == 'POST':
         form = IterationForm(request.POST)
         errors = form.errors
@@ -123,7 +132,7 @@ def New_iteration(request, slug):
             project = Project.objects.get(user=user, slug=slug)
             new_iteration = Iteration(user = request.user, duration = form.cleaned_data['duration'], project = Project.objects.get(user=user, slug=slug), name = form.cleaned_data['name'])
             new_iteration.save()
-            return HttpResponseRedirect("/dashboard/")
+            return HttpResponseRedirect(domain + slug)
         else:
             return render(request, "new_iteration.html", {"errors" : errors, "form" : form})
     return render(request, "new_iteration.html", {"form" : form, "project" : project, "user" : user})
@@ -132,7 +141,7 @@ def New_iteration(request, slug):
 @login_required(redirect_field_name=None)
 def New_developer(request, slug):
     """
-    Adds a new developer to current project
+    Creates (and assigns) a new Developer to current project that Project manager is in.
     """
     if request.method == 'POST':
         user = request.user
@@ -150,26 +159,22 @@ def New_developer(request, slug):
 def New_story(request, slug):
     user = request.user
     project = Project.objects.get(user=user, slug=slug)
+    domain = Site.objects.get_current().domain
     if request.method == 'POST':
-        form = TaskForm(request.POST)
-        errors = form.errors
-        if form.is_valid():
-            user = request.user
-            project = Project.objects.get(user=user, slug=slug)
-            new_iteration = Iteration(user = request.user, duration = form.cleaned_data['duration'], project = Project.objects.get(user=user, slug=slug), name = form.cleaned_data['name'])
-            new_iteration.save()
-            return HttpResponseRedirect("/dashboard/")
-        else:
-            return render(request, "new_iteration.html", {"errors" : errors, "form" : form})
-    return render(request, "new_iteration.html", {"form" : form, "project" : project, "user" : user})
+        new_story = Story(user = user, project = project, title = request.POST['title'])
+        new_story.save()
+        return HttpResponseRedirect(domain + slug)
+    else:
+        return HttpResponse('Req. not POST')
 
 @login_required
 def New_task(request, slug):
     """
-    Creates a new Task with Developers for this Task
+    Creates a new Task with selected Developers for this Task.
     """
     user = request.user
     project = Project.objects.get(user = user, slug = slug)
+    domain = Site.objects.get_current().domain
     if request.method == 'POST':
         user = request.user
         form = TaskForm(request.POST, project = project)
@@ -178,15 +183,19 @@ def New_task(request, slug):
             new_task.save()
             for dev in form.cleaned_data['dev']:
                 new_task.dev.add(dev.pk) # because of m2m field
-            return HttpResponseRedirect('/dashboard/')
+            return HttpResponseRedirect(domain + slug)
 
 
 @login_required
 def Task_view(request,slug, id):
+    """
+    A view for displaying Task with its info, time, new time Entries
+    for task will be added from this view.
+    """
     user = request.user
     project = Project.objects.get(user = user, slug = slug)
     task = Task.objects.get(pk = id)
-    developers = Dev.objects.filter(user = user, project = project)
+    developers = Dev.objects.filter(Task__id = task.pk)
     domain = Site.objects.get_current().domain
     return render(request, "task.html", {"task" : task, "developers" : developers, "domain" : domain})
 
@@ -198,6 +207,9 @@ def New_entry(request):
 
 
 def Start_entry(request, slug, id):
+    """
+    Time spent for Entry starts counting when a request to this view is fired.
+    """
     entry = Entry.objects.get(pk = id)
     entry.start_time = timezone.now()
     entry.save()
@@ -221,6 +233,35 @@ def Get_total_time(request, slug, id):
     seconds = entry.total_time.seconds
     a = seconds + (entry.total_time.days * 86400)
     return HttpResponse(a)
+
+
+def is_paused(self):
+    """
+    Check if Entry is paused
+    """
+    return bool(self.pause_time)
+
+def pause(self):
+    """
+    pause Entry
+    """
+    if not self.time_paused:
+        self.time_paused = timezone.now()
+
+def unpause(self, date=None):
+    """
+    Unpause Entry
+    """
+    if self.is_paused:
+        if not date:
+            date = timezone.now()
+            delta = date - self.pause_time
+            self.seconds_paused += delta.seconds
+            self.pause_time = None
+
+def get_paused_seconds(self):
+    pass
+
 
 def Get_tasks(request, slug):
     """

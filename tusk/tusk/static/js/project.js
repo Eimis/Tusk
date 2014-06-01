@@ -1,17 +1,13 @@
 
 
-// filters Tasks by iteration
+// filters Tasks by Iteration
 $(document).ready(function(){
 
 
 
-
-
-
 	$('.iterationDropdown').change(function() {
-
-
 		$.ajaxSetup({ 
+			// this script handles the csrf_token validaition when retrieving tasks by selecting iteration in dropdown
 			beforeSend: function(xhr, settings) {
 				function getCookie(name) {
 					var cookieValue = null;
@@ -36,11 +32,7 @@ $(document).ready(function(){
  });
 
 
-
-
-
 		var pathname = window.location.pathname;
-
 		$.ajax({
 			url: pathname + "get_tasks/",
 			type: "post",
@@ -57,36 +49,91 @@ $(document).ready(function(){
 	});
 
 
+// disable Submit button when submitting empty form (new_story)
+
+$('.newStoryButton').attr('disabled', 'disabled');
+$('.newStory').keyup(function() {
+
+	var empty = false;
+	$('.newStory').each(function() {
+		if ($(this).val().length == 0) {
+			empty = true;
+		}
+	});
+
+	if (empty) {
+		$('.newStoryButton').attr('disabled', 'disabled');
+	} else {
+		$('.newStoryButton').removeAttr('disabled');
+	}
+});
 
 
+// disable Submit button when submitting empty form (new_iteration)
 
+$('.newIterationButton').attr('disabled', 'disabled');
+$('.newIterationInput').keyup(function() {
+
+	var empty = false;
+	$('.newIterationInput').each(function() {
+		if ($(this).val().length == 0) {
+			empty = true;
+		}
+	});
+
+	if (empty) {
+		$('.newIterationButton').attr('disabled', 'disabled');
+	} else {
+		$('.newIterationButton').removeAttr('disabled');
+	}
 });
 
 
 
+// disable Submit button when submitting empty form (new_developer)
 
-/*
-var clicknum = 0;
-	var pathname = window.location.pathname;
-	var selected = $('.iterationDropdown').val();
-	$(".iterationDropdown").click(function(){
-		form = $(".iterationDropdownForm")
+$('.addDevButton').attr('disabled', 'disabled');
+$('.addDev').keyup(function() {
 
-		clicknum++;
-		if(clicknum == 1){
-
-			
-			$.ajax({
-				url: pathname + "get_tasks/",
-				type: "post",
-				data: form,
-				csrfmiddlewaretoken: $(".csrf").val(),
-				success: function(responseData) {
-					var tasks = responseData.tasks;
-					$(".tasks").html(tasks)
-				}
-			})
-
-			clicknum = 0;
+	var empty = false;
+	$('.addDev').each(function() {
+		if ($(this).val().length == 0) {
+			empty = true;
 		}
-	});*/
+	});
+
+	if (empty) {
+		$('.addDevButton').attr('disabled', 'disabled');
+	} else {
+		$('.addDevButton').removeAttr('disabled');
+	}
+});
+
+
+// disable Submit button when submitting empty form (new_task)
+// var hasValue = $("select option[value='---------']").attr('[selected]');
+
+
+$('.newTaskButton').attr('disabled', 'disabled');
+$('.newTask').keyup(function() {
+
+	var empty = false;
+	$('.newTask').each(function() {
+		if ($(this).val().length == 0) {
+			empty = true;
+		}
+	});
+
+	if (empty) {
+		$('.newTaskButton').attr('disabled', 'disabled');
+	} else {
+		$('.newTaskButton').removeAttr('disabled');
+	}
+});
+
+
+}); // end
+
+
+
+

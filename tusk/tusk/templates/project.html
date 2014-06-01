@@ -27,7 +27,7 @@
 			
 			<p>
 				{% for developer in developers %}
-				<b>{{ developer }}, </b>
+				<b>{{ developer.username }}, </b>
 				{% endfor %}
 			</p>
 
@@ -112,7 +112,7 @@
 						<h4 class="modal-title">Add new developer</h4>
 					</div>
 					<div class="modal-body">
-						Type new developer's <b>name</b> and <b>login credentials.</b>He will be automatically assigned to this project and will be able to login to the system. He will see this Project in his Dashboard. <br><br>
+						Type new developer's name <b>(single word)</b> and <b>login credentials. </b>He will be automatically assigned to this project and will be able to login to the system. He will see this Project in his Dashboard. <br><br>
 
 						<form action = "new_developer/" method="POST" class="new_subject_form">
 							{% csrf_token %}
@@ -133,7 +133,7 @@
 
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-							<button type="submit" class="btn btn-primary new_subject_button">Add new developer</button>
+							<button type="submit" class="btn btn-primary addDevButton">Add new developer</button>
 						</form>
 					</div>
 				</div><!-- /.modal-content -->
@@ -174,7 +174,7 @@
 
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-							<button type="submit" class="btn btn-primary new_subject_button">Add new Iteration</button>
+							<button type="submit" class="btn btn-primary new_subject_button newIterationButton">Add new Iteration</button>
 						</form>
 					</div>
 				</div><!-- /.modal-content -->
@@ -200,7 +200,7 @@
 							{% csrf_token %}
 							<div class="input-group">
 								<span class="input-group-addon"><i class="glyphicon glyphicon-certificate"></i></span>
-								<input type="text" class="form-control" placeholder="f. ex. 'As a user, I want to search for my customers by their first and last names.'" name="title">
+								<input type="text" class="form-control newStory" placeholder="f. ex. 'As a user, I want to search for my customers by their first and last names.'" name="title"></input>
 							</div>
 
 							<br><br>
@@ -214,7 +214,7 @@
 
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-							<button type="submit" class="btn btn-primary new_subject_button">Add new User Story</button>
+							<button type="submit" class="btn btn-primary newStoryButton">Add new User Story</button>
 						</form>
 					</div>
 				</div><!-- /.modal-content -->
@@ -255,7 +255,7 @@
 
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-							<button type="submit" class="btn btn-primary new_subject_button">Add new Task</button>
+							<button type="submit" class="btn btn-primary newTaskButton">Add new Task</button>
 						</form>
 					</div>
 				</div><!-- /.modal-content -->
