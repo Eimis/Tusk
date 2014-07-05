@@ -1,0 +1,5 @@
+Django==1.6.5
+argparse==1.2.1
+postgres==2.1.2
+psycopg2==2.5.3
+wsgiref==0.1.2
